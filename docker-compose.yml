@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+  backend:
+    container_name: backend
+    build: 
+      context: .
+    env_file:
+      - .development.env
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    volumes:
+      - .:/usr/src/app
+    command: npm start
+    restart: always
+
+  db:
+    container_name: db
+    image: postgres
+    env_file:
+      - .development.env
+    ports:
+      - 5432:5432
+    volumes:
+      - data:/var/lib/pgsql/data
+    environment:
+      PG_DATA : /var/lib/pgsql/data
+      POSTGRES_PASSWORD : postgres
+      POSTGRES_DB : alisaBD
+      POSTGRES_USER : postgres
+    restart: always
+   
+volumes:
+  data:

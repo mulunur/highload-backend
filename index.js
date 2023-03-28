@@ -11,7 +11,7 @@ const http = require("http");
 const res = require("express/lib/response");
 const app = express();
 
-const Port = process.env.PORT || 8080
+const Port = process.env.PORT || 3000
 
 app.use(cors())
 app.use(express.json())
@@ -34,9 +34,9 @@ const start = async () => {
 }
 
 start()
-http.createServer(app).listen(8080, () => {
+http.createServer(app).listen(Port, () => {
 	app.get('/', function(req, res){
 		res.sendfile('./tupaya.html');
 	});
-	console.log('Server is working on port 3000');
+	console.log(`Server is working on port ${Port}`);
 });
