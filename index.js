@@ -44,7 +44,7 @@ const start = async () => {
 
 start()
 
-export {redis}
+module.exports = redis
 
 http.createServer(app).listen(Port, () => {
 	app.get('/', function(req, res){
