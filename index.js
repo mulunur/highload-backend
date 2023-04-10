@@ -1,6 +1,6 @@
 require("dotenv").config()
 const express = require("express");
-const sequelize = require("./db").sequelize;;
+const sequelize = require("./db").sequelize;
 const fileUpload = require('express-fileupload')
 const cors = require("cors");
 const path = require('path');
@@ -23,8 +23,8 @@ app.use(ErrorHandler)
 const start = async () => {
 	try {
 		await sequelize.authenticate();
-		await sequelize.dropSchema('public', {});
-		await sequelize.createSchema('public', {});
+		//await sequelize.dropSchema('public', {});
+		//await sequelize.createSchema('public', {});
 		await sequelize.sync();
 		console.log('Sequelize was initialized');
 	} catch (error) {

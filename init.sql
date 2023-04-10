@@ -1,0 +1,2 @@
+CREATE TABLE IF NOT EXISTS "Users" ("id"  SERIAL UNIQUE , "email" VARCHAR(255) UNIQUE, "login" VARCHAR(255), "password" VARCHAR(255), "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL, "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL, PRIMARY KEY ("id"));
+INSERT INTO "Users" (id, email, login, password, "createdAt", "updatedAt") VALUES(1, 'test@my.test', 'test', '$2b$04$kXCDN9xOkKwRv4oEO6Pw3Owh9yiGpPBqcGdP2/W/lc5YGWBfOTc7W', '2023-04-04 18:00:38.018+00', '2023-04-04 18:00:38.018+00');

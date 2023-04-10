@@ -1,0 +1,67 @@
+version: '3.7'
+
+services:
+  backend:
+    container_name: backend
+    build: 
+      context: .
+    env_file:
+      - .development.env
+    ports:
+      - 3000:3000
+    depends_on:
+      - pgpool1
+      - pgpool2
+    volumes:
+      - .:/usr/src/app
+    command: npm start
+    restart: always
+
+  db:
+    container_name: db
+    image: postgres
+    env_file:
+      - .development.env
+    ports:
+      - 5432:5432
+    volumes:
+      - data:/var/lib/pgsql/data
+    environment:
+      PG_DATA : /var/lib/pgsql/data
+      POSTGRES_PASSWORD : postgres
+      POSTGRES_DB : alisaBD
+      POSTGRES_USER : postgres
+    restart: always
+   
+  pgpool1:
+    container_name: pgpool1
+    image: pgpool/pgpool2:latest
+    depends_on:
+      - db
+    environment:
+      PGPOOL_SR_CHECK_USER: pgpool
+      PGPOOL_SR_CHECK_PASSWORD: pgpool_password
+      PGPOOL_BACKEND_NODES: "0:db:5432 1:db:5432"
+      PGPOOL_NUM_INIT_CHILDREN: 32
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./pgpool1.conf:/etc/pgpool-II/pgpool.conf
+
+  pgpool2:
+    container_name: pgpool2
+    image: pgpool/pgpool2:latest
+    depends_on:
+      - db
+    environment:
+      PGPOOL_SR_CHECK_USER: pgpool
+      PGPOOL_SR_CHECK_PASSWORD: pgpool_password
+      PGPOOL_BACKEND_NODES: "0:db:5432 1:db:5432"
+      PGPOOL_NUM_INIT_CHILDREN: 32
+    ports:
+      - "5434:5432"
+    volumes:
+      - ./pgpool2.conf:/etc/pgpool-II/pgpool.conf
+   
+volumes:
+  data:
