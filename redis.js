@@ -13,6 +13,10 @@ export async function connectRedis(){
   redisClient.on("error", (error) => console.error(`Error : ${error}`));
 
   await redisClient.connect();
+
+  redisClient.on('connect', function() {
+    console.log('***\nRedis Connected!\n***');
+  });
 }
 
 //export default {redisClient, connectRedis};
