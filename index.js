@@ -32,7 +32,7 @@ const start = async () => {
 		//await sequelize.createSchema('public', {});
 		await sequelize.sync();
 		console.log('Sequelize was initialized');
-		redis = new redisConnection();
+		const redis = new redisConnection();
 		await redis.connectRedis();
 	} catch (error) {
 		console.log(error);

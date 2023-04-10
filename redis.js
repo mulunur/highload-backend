@@ -2,8 +2,7 @@ const redis = require("redis");
 
 class redisConnection {
     constructor() {
-        let redisClient;
-        redisClient = redis.createClient({
+        this.redisClient = redis.createClient({
             socket: {
                 host: process.env.REDIS_HOST,
                 port: process.env.REDIS_PORT
@@ -20,7 +19,7 @@ class redisConnection {
     }
 
     async connect(params) {
-        await redisClient.connect();
+        await this.redisClient.connect();
     }
 
 }
