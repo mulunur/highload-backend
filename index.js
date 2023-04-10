@@ -9,7 +9,7 @@ const router = require("./routers/index");
 const {ErrorHandler} = require("./middleware/errorHandlerMiddleware");
 const http = require("http");
 const res = require("express/lib/response");
-const { redisConnection } = require("./redis");
+const Redis = require("./redis");
 const app = express();
 
 
@@ -32,8 +32,7 @@ const start = async () => {
 		//await sequelize.createSchema('public', {});
 		await sequelize.sync();
 		console.log('Sequelize was initialized');
-		const redis = new redisConnection();
-		await redis.connectRedis();
+		Redis.connect();	
 	} catch (error) {
 		console.log(error);
 		process.exit();
