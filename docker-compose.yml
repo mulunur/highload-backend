@@ -51,9 +51,11 @@ services:
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
     ports:
-      - '7000:7000'
+      - '6379:6379'
     networks:
       - my-network
+    volumes:
+      - redis:/data
 
   pgpool:
     image: bitnami/pgpool:4
@@ -149,5 +151,7 @@ volumes:
   pg_0_data:
     driver: local
   pg_1_data:
+    driver: local
+  redis:
     driver: local
 

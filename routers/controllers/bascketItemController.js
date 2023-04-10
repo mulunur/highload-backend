@@ -1,3 +1,5 @@
+
+const { default: redisClient } = require('../../index');
 const { ApiError } = require('../../middleware/errorHandlerMiddleware');
 const { BasketItem, Basket, Item } = require('../../models/model');
 
@@ -20,20 +22,24 @@ class basketItemController{
 		try{
 			const BasketId = req.body.BasketId;
 			const ItemId = req.body.itemId;
-			const basketItem = await BasketItem.findOne({where: {ItemId, BasketId}});
-			if(basketItem){
-				return next(ApiError.userError("такой передмет в корзне уже есть"))
-			}
-			const item = await Item.findOne({where: {id: ItemId}});
-			if(item.restCount > 0)
-			{
-				const newBasketItem = await BasketItem.create({name: item.name, price: item.price, count: 1, img: item.img, BasketId, ItemId});
-				await item.update({restCount: item.restCount-1});
-				return res.json(newBasketItem);
-			}
-			else{
-				return next(ApiError.userError("товара нет на складе"))
-			}
+			// const basketItem = await BasketItem.findOne({where: {ItemId, BasketId}});
+			// if(basketItem){
+			// 	return next(ApiError.userError("такой передмет в корзне уже есть"))
+			// }
+			// const item = await Item.findOne({where: {id: ItemId}});
+			// if(item.restCount > 0)
+			// {
+			// 	const newBasketItem = await BasketItem.create({name: item.name, price: item.price, count: 1, img: item.img, BasketId, ItemId});
+			// 	await item.update({restCount: item.restCount-1});
+			// 	return res.json(newBasketItem);
+			// }
+			// else{
+			// 	return next(ApiError.userError("товара нет на складе"))
+			// }
+
+			redisClient.rpush([`${BasketId}`, `${ItemId}`], function(err, reply) {
+				return next(reply)
+			})
 		}
 		catch(e){
 			return next(ApiError.userError(e.messadge))

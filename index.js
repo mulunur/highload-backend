@@ -9,7 +9,9 @@ const router = require("./routers/index");
 const {ErrorHandler} = require("./middleware/errorHandlerMiddleware");
 const http = require("http");
 const res = require("express/lib/response");
+const { connectRedis } = require("./redis");
 const app = express();
+
 
 const Port = process.env.PORT || 3000
 
@@ -33,6 +35,8 @@ const start = async () => {
 	}
 }
 
+
+
 start()
 http.createServer(app).listen(Port, () => {
 	app.get('/', function(req, res){
@@ -40,3 +44,5 @@ http.createServer(app).listen(Port, () => {
 	});
 	console.log(`Server is working on port ${Port}`);
 });
+
+await connectRedis();
