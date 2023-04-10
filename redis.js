@@ -1,8 +1,8 @@
 const redis = require("redis");
 
-export let redisClient;
+let redisClient;
 
-export async function connectRedis(){
+async function connectRedis(){
   redisClient = redis.createClient({
 	socket: {
 		host: process.env.REDIS_HOST,
@@ -18,5 +18,4 @@ export async function connectRedis(){
     console.log('***\nRedis Connected!\n***');
   });
 }
-
-//export default {redisClient, connectRedis};
+export {redisClient, connectRedis};
