@@ -45,4 +45,4 @@ http.createServer(app).listen(Port, () => {
 	console.log(`Server is working on port ${Port}`);
 });
 
-await connectRedis();
+connectRedis();
