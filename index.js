@@ -22,7 +22,8 @@ app.use(fileUpload({}))
 app.use('/', router)
 app.use(ErrorHandler)
 
-export let redis
+let redis
+
 
 const start = async () => {
 	try {
@@ -42,6 +43,8 @@ const start = async () => {
 
 
 await start()
+
+export {redis}
 
 http.createServer(app).listen(Port, () => {
 	app.get('/', function(req, res){
