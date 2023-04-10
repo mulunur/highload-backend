@@ -1,6 +1,6 @@
 const redis = require("redis");
 
-export class redisConnection {
+class redisConnection {
     constructor() {
         let redisClient;
         redisClient = redis.createClient({
@@ -25,6 +25,7 @@ export class redisConnection {
 
 }
 
+module.exports = redisConnection
  
 
 
