@@ -1,5 +1,5 @@
 
-const { default: redisClient } = require('../../index');
+const { redis } = require('../../index');
 const { ApiError } = require('../../middleware/errorHandlerMiddleware');
 const { BasketItem, Basket, Item } = require('../../models/model');
 
@@ -37,7 +37,7 @@ class basketItemController{
 			// 	return next(ApiError.userError("товара нет на складе"))
 			// }
 
-			redisClient.rpush([`${BasketId}`, `${ItemId}`], function(err, reply) {
+			redis.rpush([`${BasketId}`, `${ItemId}`], function(err, reply) {
 				return next(reply)
 			})
 		}

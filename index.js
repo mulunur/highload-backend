@@ -9,7 +9,7 @@ const router = require("./routers/index");
 const {ErrorHandler} = require("./middleware/errorHandlerMiddleware");
 const http = require("http");
 const res = require("express/lib/response");
-const { connectRedis } = require("./redis");
+const { redisConnection } = require("./redis");
 const app = express();
 
 
@@ -22,6 +22,8 @@ app.use(fileUpload({}))
 app.use('/', router)
 app.use(ErrorHandler)
 
+export let redis
+
 const start = async () => {
 	try {
 		await sequelize.authenticate();
@@ -29,6 +31,8 @@ const start = async () => {
 		//await sequelize.createSchema('public', {});
 		await sequelize.sync();
 		console.log('Sequelize was initialized');
+		redis = redisConnection();
+		await redis.connectRedis();
 	} catch (error) {
 		console.log(error);
 		process.exit();
@@ -37,7 +41,8 @@ const start = async () => {
 
 
 
-start()
+await start()
+
 http.createServer(app).listen(Port, () => {
 	app.get('/', function(req, res){
 		res.sendfile('./tupaya.html');
@@ -45,4 +50,4 @@ http.createServer(app).listen(Port, () => {
 	console.log(`Server is working on port ${Port}`);
 });
 
-connectRedis();
+
