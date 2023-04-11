@@ -33,6 +33,7 @@ const start = async () => {
 		await sequelize.sync();
 		console.log('Sequelize was initialized');
 		Redis.connect();
+		redis = Redis.client
 		redis.rpush(["testrecord", "test recorddddd"], function(err, reply) {
 			console.log(reply)
 		})	
