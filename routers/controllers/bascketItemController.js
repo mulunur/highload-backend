@@ -1,5 +1,5 @@
 
-const { redis } = require('../../index');
+const { redis_client } = require('../../index');
 const { ApiError } = require('../../middleware/errorHandlerMiddleware');
 const { BasketItem, Basket, Item } = require('../../models/model');
 
@@ -37,7 +37,7 @@ class basketItemController{
 			// 	return next(ApiError.userError("товара нет на складе"))
 			// }
 
-			redis.RPUSH([`${BasketId}`, `${ItemId}`], function(err, reply) {
+			redis_client.RPUSH([`${BasketId}`, `${ItemId}`], function(err, reply) {
 				return next(reply)
 			})
 		}

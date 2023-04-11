@@ -10,6 +10,7 @@ const {ErrorHandler} = require("./middleware/errorHandlerMiddleware");
 const http = require("http");
 const res = require("express/lib/response");
 const Redis = require("./redis");
+const redis = require("redis");
 const app = express();
 
 
@@ -22,7 +23,12 @@ app.use(fileUpload({}))
 app.use('/', router)
 app.use(ErrorHandler)
 
-let redis
+let redis_client = redis.createClient({
+	socket: {
+		host: process.env.REDIS_HOST,
+		port: parseInt(process.env.REDIS_PORT, 10)
+	}
+});
 
 
 const start = async () => {
@@ -32,9 +38,18 @@ const start = async () => {
 		//await sequelize.createSchema('public', {});
 		await sequelize.sync();
 		console.log('Sequelize was initialized');
-		Redis.connect();
-		redis = Redis.client
-		redis.RPUSH(["testrecord", "test recorddddd"], function(err, reply) {
+		// Redis.connectRedis();
+		// redis = Redis.client
+
+		
+
+		await redis_client.connect()
+		this.client.on("error", (error) => console.error(`Error : ${error}`));
+        this.client.on('connect', function () {
+            console.log('***\nRedis Connected!\n***');
+        });
+
+		redis_client.RPUSH(["testrecord", "test recorddddd"], function(err, reply) {
 			console.log(reply)
 		})	
 	} catch (error) {
@@ -47,7 +62,7 @@ const start = async () => {
 
 start()
 
-module.exports = redis
+module.exports = redis_client
 
 http.createServer(app).listen(Port, () => {
 	app.get('/', function(req, res){

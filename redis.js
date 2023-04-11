@@ -1,7 +1,7 @@
 const redis = require("redis");
 
 class Redis {
-    static async connect() {
+    static async connectRedis() {
         this.client = redis.createClient({
             socket: {
                 host: process.env.REDIS_HOST,
