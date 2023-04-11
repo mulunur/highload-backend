@@ -50,9 +50,7 @@ const start = async () => {
             console.log('***\nRedis Connected!\n***');
         });
 
-		redis_client.RPUSH(["testrecord", "test recorddddd"], function(err, reply) {
-			console.log(reply)
-		})	
+		redis_client.RPUSH(['testrecord', 'test recorddddd'])	
 	} catch (error) {
 		console.log(error);
 		process.exit();
