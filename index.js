@@ -32,7 +32,10 @@ const start = async () => {
 		//await sequelize.createSchema('public', {});
 		await sequelize.sync();
 		console.log('Sequelize was initialized');
-		Redis.connect();	
+		Redis.connect();
+		redis.rpush(["testrecord", "test recorddddd"], function(err, reply) {
+			console.log(reply)
+		})	
 	} catch (error) {
 		console.log(error);
 		process.exit();
