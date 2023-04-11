@@ -62,7 +62,7 @@ services:
     ports:
       - 127.0.0.10:5432:5432
     environment:
-      - PGPOOL_BACKEND_NODES=0:pg-0:5432,1:pg-1:5432,2:redis:7000
+      - PGPOOL_BACKEND_NODES=0:pg-0:5432,1:pg-1:5432
       - PGPOOL_SR_CHECK_USER=postgres
       - PGPOOL_SR_CHECK_PASSWORD=postgres
       - PGPOOL_ENABLE_LDAP=no
