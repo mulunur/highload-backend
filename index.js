@@ -9,7 +9,6 @@ const router = require("./routers/index");
 const {ErrorHandler} = require("./middleware/errorHandlerMiddleware");
 const http = require("http");
 const res = require("express/lib/response");
-const Redis = require("./redis");
 const redis = require("redis");
 const app = express();
 
