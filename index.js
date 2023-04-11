@@ -44,8 +44,8 @@ const start = async () => {
 		
 
 		await redis_client.connect()
-		this.client.on("error", (error) => console.error(`Error : ${error}`));
-        this.client.on('connect', function () {
+		redis_client.on("error", (error) => console.error(`Error : ${error}`));
+        redis_client.on('connect', function () {
             console.log('***\nRedis Connected!\n***');
         });
 
