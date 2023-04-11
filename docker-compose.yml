@@ -105,26 +105,26 @@ services:
     networks:
       - my-network
  
-  backend-2:
-    build: 
-      context: .
-    env_file:
-      - .development.env
-    ports:
-      - 127.0.0.2:8888:8888
-    depends_on:
-      - pgpool
-    healthcheck:
-      test: /usr/bin/pg_isready -U postgres -h pgpool
-      interval: 3s
-      timeout: 30s
-      retries: 10
-    volumes:
-      - .:/usr/src/app
-    command: npm start
-    restart: always
-    networks:
-      - my-network
+  #backend-2:
+  #  build: 
+  #    context: .
+  #  env_file:
+  #    - .development.env
+  #  ports:
+  #    - 127.0.0.2:8888:8888
+  #  depends_on:
+  #    - pgpool
+  #  healthcheck:
+  #    test: /usr/bin/pg_isready -U postgres -h pgpool
+  #    interval: 3s
+  #    timeout: 30s
+  #    retries: 10
+  #  volumes:
+  #    - .:/usr/src/app
+  #  command: npm start
+  #  restart: always
+  #  networks:
+  #    - my-network
 
   backend-3:
     build: 
