@@ -37,7 +37,7 @@ class basketItemController{
 			// 	return next(ApiError.userError("товара нет на складе"))
 			// }
 
-			redis_client.RPUSH([`${BasketId}`, `${ItemId}`])
+			redis_client.RPUSH(`${BasketId}`, `${ItemId}`)
 			return res.json({"result": "OK"})
 		}
 		catch(e){

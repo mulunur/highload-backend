@@ -23,7 +23,7 @@ app.use('/', router)
 app.use(ErrorHandler)
 
 let redis_client = redis.createClient({
-	// legacyMode: true,
+	legacyMode: true,
 	socket: {
 		host: process.env.REDIS_HOST,
 		port: parseInt(process.env.REDIS_PORT, 10)
@@ -49,7 +49,7 @@ const start = async () => {
             console.log('***\nRedis Connected!\n***');
         });
 
-		redis_client.RPUSH(['testrecord', 'test recorddddd'])	
+		redis_client.RPUSH('testrecord', 'test recorddddd')	
 	} catch (error) {
 		console.log(error);
 		process.exit();
