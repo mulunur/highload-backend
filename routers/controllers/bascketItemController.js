@@ -37,7 +37,7 @@ class basketItemController{
 			// 	return next(ApiError.userError("товара нет на складе"))
 			// }
 
-			redis.rpush([`${BasketId}`, `${ItemId}`], function(err, reply) {
+			redis.RPUSH([`${BasketId}`, `${ItemId}`], function(err, reply) {
 				return next(reply)
 			})
 		}
